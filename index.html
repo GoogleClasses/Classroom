@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background-color: lightgray;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 100%;
+            background-color: blue;
+            animation: loading 1s linear infinite;
+        }
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="passwordForm">
+        <h3>Introdueix la contrasenya per anar a: Google Classroom</h3>
+        <input type="password" id="passwordInput" placeholder="Contrasenya">
+        <button onclick="checkPassword()">Accedir</button>
+        <p id="errorMessage" class="error" style="display: none;">Contrasenya incorrecta. Prova-ho de nou.</p>
+        <p id="attemptsMessage" class="error" style="display: none;"></p>
+    </div>
+    
+    <div id="progressBarContainer" class="progress-bar-container">
+        <div class="progress-bar"></div>
+    </div>
+    
+    <div id="content" style="display: none; text-align: center;">
+        <h1>Benvingut a la pàgina secreta de JOCS</h1>
+        <div id="gameContent" style="display: none;">
+            <div style="margin-bottom: 50px;"><iframe src="https://azgames.io/drive-mad.embed" width="960" height="540" frameborder="0" allowfullscreen></iframe></div>
+            <div style="margin-bottom: 50px;"><iframe src="https://azgames.io/escape-road.embed" width="960" height="540" frameborder="0" allowfullscreen></iframe></div>
+            <div style="margin-bottom: 50px;"><iframe src="https://azgames.io/wave-road.embed" width="960" height="540" frameborder="0" allowfullscreen></iframe></div>
+            <div style="margin-bottom: 50px;"><iframe src="https://azgames.io/moto-x3m.embed" width="960" height="540" frameborder="0" allowfullscreen></iframe></div>
+            <div style="margin-bottom: 50px;"><iframe src="https://scratch.mit.edu/projects/612229554/embed" allowtransparency="true" width="600" height="500" frameborder="0" scrolling="no" allowfullscreen></iframe></div>
+
+        </div>
+<script src="https://minnit.chat/js/embed.js" defer></script><minnit-chat data-chatname="https://organizations.minnit.chat/532975627527221/Main?embed" data-style="width:90%; height:500px; max-height:90vh;"></minnit-chat>
+<p>No t'oblidis de Desconnectar la teva compte del xat, fes-ho al símbol de la persona, i després ves a desconnectar/disconnect</p>
+    </div>
+    
+    <div id="redirectMessage" style="display: none; text-align: center; margin-top: 20px;">
+        <p>Hi ha hagut un error en la redirecció, pots continuar en el següent enllaç: 
+        <a href="https://classroom.google.com" target="_blank">Google Classroom</a></p>
+    </div>
+    <p style="font-family: Arial, serif; font-size: 8px;">Copyright Google LLC ©2007</p>
+    <script>
+        let failedAttempts = 0;
+        const maxAttempts = 2;
+        const encryptedPassword = btoa("45");
+
+        function checkPassword() {
+            var passwordInput = document.getElementById("passwordInput");
+            var passwordValue = passwordInput.value;
+            var correctPassword = atob(encryptedPassword);
+            document.getElementById("errorMessage").style.display = "none";
+            document.getElementById("attemptsMessage").style.display = "none";
+            
+            if (passwordValue === correctPassword) {
+                document.getElementById("passwordForm").style.display = "none";
+                document.getElementById("progressBarContainer").style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("progressBarContainer").style.display = "none";
+                    document.getElementById("content").style.display = "block";
+                    document.getElementById("gameContent").style.display = "block";
+                }, 5000);
+            } else {
+                failedAttempts++;
+                let attemptsLeft = maxAttempts - failedAttempts;
+                document.getElementById("attemptsMessage").style.display = "block";
+                document.getElementById("attemptsMessage").innerText = "Intents restants: " + attemptsLeft;
+                
+                passwordInput.classList.add("shake");
+                setTimeout(() => {
+                    passwordInput.classList.remove("shake");
+                }, 300);
+                
+                if (failedAttempts >= maxAttempts) {
+                    document.getElementById("passwordForm").style.display = "none";
+                    document.getElementById("progressBarContainer").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("progressBarContainer").style.display = "none";
+                        document.getElementById("redirectMessage").style.display = "block";
+                    }, 5000);
+                } else {
+                    document.getElementById("errorMessage").style.display = "block";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
