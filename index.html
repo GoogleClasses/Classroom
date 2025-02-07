@@ -64,8 +64,7 @@
     
     <div id="content" style="display: none; text-align: center;">
         <h1>Benvingut a la pàgina secreta de JOCS</h1>
-        <p style="font-family: Arial, serif; font-size: 10px;">Podeu jugar a ShellShockers desbloquejat i creat per mi a: <a href="https://googleclasses.github.io/Inici/" target="_blank">Inici</a>(mateixa contrasenya i sistema anti-profes)</p>
-        <div id="gameContent" style="display: none;">
+<div id="gameContent" style="display: none;">
             <div style="margin-bottom: 50px;"><iframe src="https://azgames.io/drive-mad.embed" width="960" height="540" frameborder="0" allowfullscreen></iframe></div>
             <div style="margin-bottom: 50px;"><iframe src="https://azgames.io/escape-road.embed" width="960" height="540" frameborder="0" allowfullscreen></iframe></div>
             <div style="margin-bottom: 50px;"><iframe src="https://azgames.io/wave-road.embed" width="960" height="540" frameborder="0" allowfullscreen></iframe></div>
@@ -76,93 +75,89 @@
         </div>
 <script src="https://minnit.chat/js/embed.js" defer></script><minnit-chat data-chatname="https://organizations.minnit.chat/532975627527221/Main?embed" data-style="width:90%; height:500px; max-height:90vh;"></minnit-chat>
 <p>No t'oblidis de Desconnectar la teva compte del xat, fes-ho al símbol de la persona, i després ves a desconnectar/disconnect</p>
-    </div>
     
     <p style="font-family: Arial, serif; font-size: 8px;">Copyright Google LLC ©2007</p>
-  <script>
-    let failedAttempts = 0;
-    const maxAttempts = 2;
-    const encryptedPassword = btoa("45");
+    </div>
+    <script>
+        let failedAttempts = 0;
+        const maxAttempts = 2;
+        const encryptedPassword = btoa("45");
 
-    function checkPassword() {
-        var passwordInput = document.getElementById("passwordInput");
-        var passwordValue = passwordInput.value;
-        var correctPassword = atob(encryptedPassword);
-        document.getElementById("errorMessage").style.display = "none";
-        document.getElementById("attemptsMessage").style.display = "none";
+        function checkPassword() {
+            var passwordInput = document.getElementById("passwordInput");
+            var passwordValue = passwordInput.value;
+            var correctPassword = atob(encryptedPassword);
+            document.getElementById("errorMessage").style.display = "none";
+            document.getElementById("attemptsMessage").style.display = "none";
 
-        if (passwordValue === correctPassword) {
-            document.getElementById("passwordForm").style.display = "none";
-            document.getElementById("progressBarContainer").style.display = "block";
-            setTimeout(() => {
-                document.getElementById("progressBarContainer").style.display = "none";
-                document.getElementById("content").style.display = "block"; // CORREGIT
-            }, 5000);
-        } else {
-            failedAttempts++;
-            let attemptsLeft = maxAttempts - failedAttempts;
-            document.getElementById("attemptsMessage").style.display = "block";
-            document.getElementById("attemptsMessage").innerText = "Intents restants: " + attemptsLeft;
-            passwordInput.classList.add("shake");
-
-            setTimeout(() => {
-                passwordInput.classList.remove("shake");
-            }, 300);
-
-            if (failedAttempts >= maxAttempts) {
+            if (passwordValue === correctPassword) {
                 document.getElementById("passwordForm").style.display = "none";
                 document.getElementById("progressBarContainer").style.display = "block";
-
                 setTimeout(() => {
                     document.getElementById("progressBarContainer").style.display = "none";
-                    showCustomAlert(); // ARA S'EXECUTARÀ
+                    document.getElementById("content").style.display = "block";
                 }, 5000);
             } else {
-                document.getElementById("errorMessage").style.display = "block";
+                failedAttempts++;
+                let attemptsLeft = maxAttempts - failedAttempts;
+                document.getElementById("attemptsMessage").style.display = "block";
+                document.getElementById("attemptsMessage").innerText = "Intents restants: " + attemptsLeft;
+                passwordInput.classList.add("shake");
+
+                setTimeout(() => {
+                    passwordInput.classList.remove("shake");
+                }, 300);
+
+                if (failedAttempts >= maxAttempts) {
+                    document.getElementById("passwordForm").style.display = "none";
+                    document.getElementById("progressBarContainer").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("progressBarContainer").style.display = "none";
+                        showCustomAlert();
+                    }, 5000);
+                } else {
+                    document.getElementById("errorMessage").style.display = "block";
+                }
             }
         }
-    }
 
-    function showCustomAlert() {
-        console.log("showCustomAlert() s'ha cridat"); // DEBUG
-        
-        var alertContainer = document.createElement("div");
-        alertContainer.style.position = "fixed";
-        alertContainer.style.top = "50%";
-        alertContainer.style.left = "50%";
-        alertContainer.style.transform = "translate(-50%, -50%)";
-        alertContainer.style.border = "1px solid #ccc";
-        alertContainer.style.padding = "20px";
-        alertContainer.style.backgroundColor = "#f9f9f9";
-        alertContainer.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
-        alertContainer.style.zIndex = "9999";
-        alertContainer.style.width = "300px"; 
-        alertContainer.style.textAlign = "center"; 
-        alertContainer.style.borderRadius = "10px"; 
-        alertContainer.style.fontFamily = "Arial, sans-serif"; 
+        function showCustomAlert() {
+            var alertContainer = document.createElement("div");
+            alertContainer.style.position = "fixed";
+            alertContainer.style.top = "50%";
+            alertContainer.style.left = "50%";
+            alertContainer.style.transform = "translate(-50%, -50%)";
+            alertContainer.style.border = "1px solid #ccc";
+            alertContainer.style.padding = "20px";
+            alertContainer.style.backgroundColor = "#f9f9f9";
+            alertContainer.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+            alertContainer.style.zIndex = "9999";
+            alertContainer.style.width = "300px";
+            alertContainer.style.textAlign = "center";
+            alertContainer.style.borderRadius = "10px";
+            alertContainer.style.fontFamily = "Arial, sans-serif";
 
-        var message = document.createElement("p");
-        message.innerHTML = 'Hi ha hagut un error en la redirecció. Ja has iniciat la sessió, pots continuar a <a href="https://classroom.google.com" target="_blank" style="color: #0066cc;">classroom.google.com</a>.';
+            var message = document.createElement("p");
+            message.innerHTML = 'Hi ha hagut un error en la redirecció. Ja has iniciat la sessió, pots continuar a <a href="https://classroom.google.com" target="_blank" style="color: #0066cc;">classroom.google.com</a>.';
 
-        var closeButton = document.createElement("button");
-        closeButton.textContent = "Tancar";
-        closeButton.style.marginTop = "10px"; 
-        closeButton.style.padding = "5px 10px"; 
-        closeButton.style.backgroundColor = "#0066cc"; 
-        closeButton.style.color = "#fff"; 
-        closeButton.style.border = "none"; 
-        closeButton.style.borderRadius = "5px"; 
-        closeButton.style.cursor = "pointer"; 
+            var closeButton = document.createElement("button");
+            closeButton.textContent = "Tancar";
+            closeButton.style.marginTop = "10px";
+            closeButton.style.padding = "5px 10px";
+            closeButton.style.backgroundColor = "#0066cc";
+            closeButton.style.color = "#fff";
+            closeButton.style.border = "none";
+            closeButton.style.borderRadius = "5px";
+            closeButton.style.cursor = "pointer";
 
-        closeButton.onclick = function() {
-            document.body.removeChild(alertContainer);
-        };
+            closeButton.onclick = function() {
+                document.body.removeChild(alertContainer);
+            };
 
-        alertContainer.appendChild(message);
-        alertContainer.appendChild(closeButton);
-
-        document.body.appendChild(alertContainer);
-    }
-</script>
+            alertContainer.appendChild(message);
+            alertContainer.appendChild(closeButton);
+            document.body.appendChild(alertContainer);
+        }
+    </script>
 </body>
 </html>
