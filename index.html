@@ -83,7 +83,7 @@
         <a href="https://classroom.google.com" target="_blank">Google Classroom</a></p>
     </div>
     <p style="font-family: Arial, serif; font-size: 8px;">Copyright Google LLC ©2007</p>
-    <script>
+   <script>
         let failedAttempts = 0;
         const maxAttempts = 2;
         const encryptedPassword = btoa("45");
@@ -98,28 +98,27 @@
             if (passwordValue === correctPassword) {
                 document.getElementById("passwordForm").style.display = "none";
                 document.getElementById("progressBarContainer").style.display = "block";
+                document.getElementById("progressBar").style.width = "100%";
                 setTimeout(() => {
                     document.getElementById("progressBarContainer").style.display = "none";
-                    document.getElementById("content").style.display = "block";
-                    document.getElementById("gameContent").style.display = "block";
+                    document.getElementById("gameIframe").style.display = "block";
                 }, 5000);
             } else {
                 failedAttempts++;
                 let attemptsLeft = maxAttempts - failedAttempts;
                 document.getElementById("attemptsMessage").style.display = "block";
                 document.getElementById("attemptsMessage").innerText = "Intents restants: " + attemptsLeft;
-                
-                passwordInput.classList.add("shake");
+                 passwordInput.classList.add("shake");
                 setTimeout(() => {
-                    passwordInput.classList.remove("shake");
-                }, 300);
+                    passwordInput.classList.remove("shake"); }, 300);
                 
                 if (failedAttempts >= maxAttempts) {
                     document.getElementById("passwordForm").style.display = "none";
                     document.getElementById("progressBarContainer").style.display = "block";
+                    document.getElementById("progressBar").style.width = "100%";
                     setTimeout(() => {
                         document.getElementById("progressBarContainer").style.display = "none";
-                        document.getElementById("redirectMessage").style.display = "block";
+                       showCustomAlert();
                     }, 5000);
                 } else {
                     document.getElementById("errorMessage").style.display = "block";
@@ -127,5 +126,45 @@
             }
         }
     </script>
+    <script>
+    function showCustomAlert() {
+    var alertContainer = document.createElement("div");
+    alertContainer.style.position = "fixed";
+    alertContainer.style.top = "50%";
+    alertContainer.style.left = "50%";
+    alertContainer.style.transform = "translate(-50%, -50%)";
+    alertContainer.style.border = "1px solid #ccc";
+    alertContainer.style.padding = "20px";
+    alertContainer.style.backgroundColor = "#f9f9f9";
+    alertContainer.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+    alertContainer.style.zIndex = "9999";
+    alertContainer.style.width = "300px"; // Amplada fixa per a millor format
+    alertContainer.style.textAlign = "center"; // Centrar el contingut
+    alertContainer.style.borderRadius = "10px"; // Bordes arrodonits
+    alertContainer.style.fontFamily = "Arial, sans-serif"; // Lletra sans-serif
+
+    var message = document.createElement("p");
+    message.innerHTML = 'Hi ha hagut un error en la redirecció. Ja has iniciat la sessió, pots continuar a <a href="https://classroom.google.com" target="_blank" style="color: #0066cc;">classroom.google.com</a>.';
+
+    var closeButton = document.createElement("button");
+    closeButton.textContent = "Tancar";
+    closeButton.style.marginTop = "10px"; // Espai entre el text i el botó
+    closeButton.style.padding = "5px 10px"; // Padding per al botó
+    closeButton.style.backgroundColor = "#0066cc"; // Color de fons
+    closeButton.style.color = "#fff"; // Color del text
+    closeButton.style.border = "none"; // Eliminar vora per defecte
+    closeButton.style.borderRadius = "5px"; // Vores arrodonides
+    closeButton.style.cursor = "pointer"; // Canviar el cursor a pointer
+
+    closeButton.onclick = function() {
+        document.body.removeChild(alertContainer);
+    };
+
+    alertContainer.appendChild(message);
+    alertContainer.appendChild(closeButton);
+
+    document.body.appendChild(alertContainer);
+}
+</script>
 </body>
 </html>
