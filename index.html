@@ -90,14 +90,15 @@
             document.getElementById("errorMessage").style.display = "none";
             document.getElementById("attemptsMessage").style.display = "none";
 
-            if (passwordValue === correctPassword) {
-                document.getElementById("passwordForm").style.display = "none";
-                document.getElementById("progressBarContainer").style.display = "block";
-                setTimeout(() => {
-                    document.getElementById("progressBarContainer").style.display = "none";
-                    document.getElementById("content").style.display = "block";
-                }, 5000);
-            } else {
+           if (passwordValue === correctPassword) {
+    document.getElementById("passwordForm").style.display = "none";
+    document.getElementById("progressBarContainer").style.display = "block";
+    setTimeout(() => {
+        document.getElementById("progressBarContainer").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        document.getElementById("gameContent").style.display = "block"; // Mostrem el contingut dels jocs
+        }, 5000);
+        }    else {
                 failedAttempts++;
                 let attemptsLeft = maxAttempts - failedAttempts;
                 document.getElementById("attemptsMessage").style.display = "block";
