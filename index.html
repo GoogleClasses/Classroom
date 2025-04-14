@@ -53,7 +53,7 @@
     <div id="passwordForm">
         <h3>Hi ha hagut un error, torna-ho a intentar</h3>
         <input type="password" id="passwordInput" placeholder="Contrasenya">
-        <button onclick="checkPassword()">Sing In</button>
+        <button id="signInButton">Sign In</button>
         <p id="errorMessage" class="error" style="display: none;">Conrasenya Incorrecta</p>
         <p id="attemptsMessage" class="error" style="display: none;"></p>
     </div>
@@ -68,6 +68,9 @@
         <p>Pàgina <a href="shell.html" target="_blank">Shell Shockers</a> <br> Pàgina <a href="eagle.html">Minecraft 1.8.8</a></p>
     <p style="font-family: Arial, serif; font-size: 8px;">FK Copyright Google LLC ©2007</p>
     </div>
+    <script>
+    document.getElementById('signInButton').addEventListener('click', checkPassword);
+</script>
     <script>
         let failedAttempts = 0;
         const maxAttempts = 2;
