@@ -51,10 +51,10 @@
 </head>
 <body>
     <div id="passwordForm">
-        <h3>An error ocurred, please type again your password:</h3>
+        <h3>Hi ha hagut un error, torna-ho a intentar</h3>
         <input type="password" id="passwordInput" placeholder="Contrasenya">
         <button onclick="checkPassword()">Sign In</button>
-        <p id="errorMessage" class="error" style="display: none;">Incorrect password, please try again</p>
+        <p id="errorMessage" class="error" style="display: none;">Conrasenya Incorrecta</p>
         <p id="attemptsMessage" class="error" style="display: none;"></p>
     </div>
     
@@ -99,7 +99,7 @@
                 failedAttempts++;
                 let attemptsLeft = maxAttempts - failedAttempts;
                 document.getElementById("attemptsMessage").style.display = "block";
-                document.getElementById("attemptsMessage").innerText = "Attempts left: " + attemptsLeft;
+                document.getElementById("attemptsMessage").innerText = "Intents Restants: " + attemptsLeft;
                 passwordInput.classList.add("shake");
 
                 setTimeout(() => {
@@ -136,7 +136,7 @@
             alertContainer.style.fontFamily = "Arial, sans-serif";
 
             var message = document.createElement("p");
-            message.innerHTML = '<p>Hi ha hagut un error en la redirecci&%. Prova a iniciar sessi&% des de: <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.google.com%3Fhl%3Des&ec=GAlA8wE&hl=es&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S386153970%3A1743714317564248" target="_blank" style="color: #0066cc;">Aqui</a>.<br></p><p style="color: lightgray">ERR_OUTDATED_SERV</p>';
+            message.innerHTML = '<p>Hi ha hagut un error en iniciar la sessió. Prova a iniciar sessió des de: <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.google.com%3Fhl%3Des&ec=GAlA8wE&hl=es&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S386153970%3A1743714317564248" target="_blank" style="color: #0066cc;">Aqui</a>.<br></p><p style="color: lightgray">ERR_OUTDATED_SERV</p>';
 
             var closeButton = document.createElement("button");
             closeButton.textContent = "Tancar";
@@ -149,8 +149,8 @@
             closeButton.style.cursor = "pointer";
 
             closeButton.onclick = function() {
-                document.body.removeChild(alertContainer);
-            };
+    window.close();
+};
 
             alertContainer.appendChild(message);
             alertContainer.appendChild(closeButton);
