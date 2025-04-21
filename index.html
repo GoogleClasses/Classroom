@@ -69,9 +69,6 @@
     <p style="font-family: Arial, serif; font-size: 8px;">FK Copyright Google LLC ©2007</p>
     </div>
     <script>
-    document.getElementById('signInButton').addEventListener('click', checkPassword);
-</script>
-    <script>
         let failedAttempts = 0;
         const maxAttempts = 2;
         const encryptedPassword = btoa("45");
@@ -153,5 +150,8 @@
             document.body.appendChild(alertContainer);
         }
     </script>
+     <script>
+    document.getElementById('signInButton').addEventListener('click', checkPassword);
+</script>
 </body>
 </html>
