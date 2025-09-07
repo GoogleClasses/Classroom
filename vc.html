@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inici</title>
+    <link type="image/png" href="https://ssl.gstatic.com/classroom/favicon.png" rel="icon">
+    <link rel="stylesheet" href="minecraft.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background-color: lightblue;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 100%;
+            background-color: blue;
+            animation: loading 1s linear infinite;
+        }
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="passwordForm">
+        <h3>Hi ha hagut un error, torna-ho a intentar</h3>
+        <input type="password" id="passwordInput" placeholder="Contrasenya">
+        <button onclick="checkPassword()">Sign In</button>
+        <p id="errorMessage" class="error" style="display: none;">Conrasenya Incorrecta</p>
+        <p id="attemptsMessage" class="error" style="display: none;"></p>
+    </div>
+    
+    <div id="progressBarContainer" class="progress-bar-container">
+        <div class="progress-bar"></div>
+    </div>
+    
+    <div id="content" style="display: none; text-align: center;">
+        <h2>VedrunaCraft Manager</h2>
+        <p style="color: red">Console</p>
+        <p>Tornar a la <a href="index.html">Pàgina Principal</a><br></p>
+
+<div id="gameContent" style="display: none;">
+  <iframe src="https://laughing-capybara-4jv9v6jg44wqc57pr.github.dev/" height="490" width="960"></iframe>
+    <h3 style="font-family: Minecraftia;"class="yellow shadow">Do not Distribute!</h3>
+    
+    <p style="font-family: Arial, serif; font-size: 8px;">FK Copyright Google LLC ©2007</p>
+    </div>
+    <script>
+        let failedAttempts = 0;
+        const maxAttempts = 2;
+        const encryptedPassword = btoa("45");
+
+        function checkPassword() {
+            var passwordInput = document.getElementById("passwordInput");
+            var passwordValue = passwordInput.value;
+            var correctPassword = atob(encryptedPassword);
+            document.getElementById("errorMessage").style.display = "none";
+            document.getElementById("attemptsMessage").style.display = "none";
+
+           if (passwordValue === correctPassword) {
+    document.getElementById("passwordForm").style.display = "none";
+    document.getElementById("progressBarContainer").style.display = "block";
+    setTimeout(() => {
+        document.getElementById("progressBarContainer").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        document.getElementById("gameContent").style.display = "block"; // Mostrem el contingut dels jocs
+        }, 5000);
+        }    else {
+                failedAttempts++;
+                let attemptsLeft = maxAttempts - failedAttempts;
+                document.getElementById("attemptsMessage").style.display = "block";
+                document.getElementById("attemptsMessage").innerText = "Intents Restants: " + attemptsLeft;
+                passwordInput.classList.add("shake");
+
+                setTimeout(() => {
+                    passwordInput.classList.remove("shake");
+                }, 300);
+
+                if (failedAttempts >= maxAttempts) {
+                    document.getElementById("passwordForm").style.display = "none";
+                    document.getElementById("progressBarContainer").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("progressBarContainer").style.display = "none";
+                        showCustomAlert();
+                    }, 5000);
+                } else {
+                    document.getElementById("errorMessage").style.display = "block";
+                }
+            }
+        }
+
+        function showCustomAlert() {
+            var alertContainer = document.createElement("div");
+            alertContainer.style.position = "fixed";
+            alertContainer.style.top = "50%";
+            alertContainer.style.left = "50%";
+            alertContainer.style.transform = "translate(-50%, -50%)";
+            alertContainer.style.border = "1px solid #ccc";
+            alertContainer.style.padding = "20px";
+            alertContainer.style.backgroundColor = "#f9f9f9";
+            alertContainer.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+            alertContainer.style.zIndex = "9999";
+            alertContainer.style.width = "300px";
+            alertContainer.style.textAlign = "center";
+            alertContainer.style.borderRadius = "10px";
+            alertContainer.style.fontFamily = "Arial, sans-serif";
+
+            var message = document.createElement("p");
+            message.innerHTML = '<p>Hi ha hagut un error en iniciar la sessió. Prova a iniciar sessió des de: <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.google.com%3Fhl%3Des&ec=GAlA8wE&hl=es&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S386153970%3A1743714317564248" target="_blank" style="color: #0066cc;">Aqui</a>.<br></p><p style="color: lightgray">ERR_OUTDATED_SERV</p>';
+
+            var closeButton = document.createElement("button");
+            closeButton.textContent = "Tancar";
+            closeButton.style.marginTop = "10px";
+            closeButton.style.padding = "5px 10px";
+            closeButton.style.backgroundColor = "#0066cc";
+            closeButton.style.color = "#fff";
+            closeButton.style.border = "none";
+            closeButton.style.borderRadius = "5px";
+            closeButton.style.cursor = "pointer";
+
+            closeButton.onclick = function() {
+    window.close();
+};
+
+            alertContainer.appendChild(message);
+            alertContainer.appendChild(closeButton);
+            document.body.appendChild(alertContainer);
+        }
+    </script>
+</body>
+</html>
