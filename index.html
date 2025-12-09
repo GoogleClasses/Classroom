@@ -420,7 +420,7 @@
             <form id="loginForm">
                 <div class="form-group">
                     <label class="form-label">Email or phone</label>
-                    <input type="email" id="email" placeholder="Enter your email" required value="student@school.edu">
+                    <input type="email" id="email" placeholder="Enter your email" required>
                 </div>
                 
                 <div class="form-group">
@@ -464,7 +464,7 @@
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Loading Eaglercraft...</div>
+        <div class="loading-text">Signing in...</div>
     </div>
     
     <!-- Game Container (Hidden until login) -->
@@ -635,13 +635,13 @@
             
             // Create account button
             document.querySelector('.create-account').addEventListener('click', function() {
-                alert('This is a demo. Account creation is not available.');
+                alert('Account creation is not available.');
             });
             
             // Forgot password link
             document.querySelector('.forgot-password').addEventListener('click', function(e) {
                 e.preventDefault();
-                alert('Password hint: The password is "45"');
+                alert('Error at: java.lang.char.lgl17.main:673');
             });
             
             // Focus on password input after email is pre-filled
