@@ -1,164 +1,651 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inici</title>
-    <link type="image/png" href="https://ssl.gstatic.com/classroom/favicon.png" rel="icon">
-    <link rel="stylesheet" href="minecraft.css">
+    <title>Google Classroom</title>
+    <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/x-icon">
     <style>
-        .nyan {
-            cursor: url("nyansvg.png"), auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
         }
+        
         body {
-            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #202124;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .success {
-            color: green;
-            font-weight: bold;
-        }
-        .error {
-            color: red;
-            font-weight: bold;
-        }
-        .progress-bar-container {
+        
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 5px;
-            background-color: lightblue;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            border-bottom: 1px solid #dadce0;
+        }
+        
+        .google-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 22px;
+            color: #5f6368;
+        }
+        
+        .google-color {
+            display: flex;
+        }
+        
+        .google-color span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 2px;
+        }
+        
+        .google-color span:nth-child(1) { background-color: #4285F4; }
+        .google-color span:nth-child(2) { background-color: #EA4335; }
+        .google-color span:nth-child(3) { background-color: #FBBC05; }
+        .google-color span:nth-child(4) { background-color: #34A853; }
+        
+        .classroom-text {
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #4285F4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 448px;
+            padding: 20px;
+            margin-top: 60px;
+        }
+        
+        .login-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 48px 40px 36px;
+            box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+            text-align: center;
+        }
+        
+        .login-logo {
+            margin-bottom: 16px;
+        }
+        
+        .login-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #202124;
+        }
+        
+        .login-subtitle {
+            font-size: 16px;
+            color: #5f6368;
+            margin-bottom: 36px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #202124;
+        }
+        
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 13px 15px;
+            background-color: transparent;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            color: #202124;
+            font-size: 16px;
+            transition: border 0.2s;
+        }
+        
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #1a73e8;
+            border-width: 2px;
+        }
+        
+        .password-hint {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+        
+        .show-password {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #1a73e8;
+            cursor: pointer;
+        }
+        
+        .show-password input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            font-size: 14px;
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .login-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+        }
+        
+        .create-account {
+            font-size: 14px;
+            color: #1a73e8;
+            background: none;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .create-account:hover {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .next-button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .next-button:hover {
+            background-color: #1666d6;
+            box-shadow: 0 1px 3px rgba(66,133,244,0.3);
+        }
+        
+        .error-message {
+            color: #d93025;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        .footer {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            color: #5f6368;
+            font-size: 12px;
+            width: 100%;
+            max-width: 448px;
+            padding: 0 20px;
+        }
+        
+        .language-selector {
+            background: none;
+            border: none;
+            color: #5f6368;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .footer-links a {
+            color: #5f6368;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Game container (hidden by default) */
+        .game-container {
+            display: none;
+            width: 100%;
+            height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            display: none;
-            overflow: hidden;
+            z-index: 1000;
+            background-color: black;
         }
-        .progress-bar {
-            height: 100%;
+        
+        .game-header {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            background-color: blue;
-            animation: loading 1s linear infinite;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background-color: rgba(0, 0, 0, 0.7);
         }
-        @keyframes loading {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        
+        .game-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
         }
+        
+        .game-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logout-btn {
+            padding: 8px 16px;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .logout-btn:hover {
+            background-color: #3367D6;
+        }
+        
+        .fullscreen-btn {
+            padding: 8px 16px;
+            background-color: #34A853;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .fullscreen-btn:hover {
+            background-color: #2E8B47;
+        }
+        
+        .game-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4285F4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            color: #5f6368;
+            font-size: 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Shake animation for error */
         @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
-        .shake {
-            animation: shake 0.3s ease-in-out;
+        
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 40px 24px 36px;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .container {
+                padding: 0;
+            }
+            
+            .header {
+                padding: 12px 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="passwordForm">
-        <h3>Hi ha hagut un error, torna-ho a intentar</h3>
-        <input type="password" id="passwordInput" placeholder="Contrasenya">
-        <button onclick="checkPassword()">Sign In</button>
-        <p id="errorMessage" class="error" style="display: none;">Conrasenya Incorrecta</p>
-        <p id="attemptsMessage" class="error" style="display: none;"></p>
+    <!-- Google Classroom Header -->
+    <div class="header">
+        <div class="google-logo">
+            <div class="google-color">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="classroom-text">Classroom</span>
+        </div>
+        <div class="header-right">
+            <div class="profile-icon">S</div>
+        </div>
     </div>
     
-    <div id="progressBarContainer" class="progress-bar-container">
-        <div class="progress-bar"></div>
+    <!-- Login Container -->
+    <div class="container" id="loginContainer">
+        <div class="login-card">
+            <div class="login-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+            </div>
+            <h1 class="login-title">Sign in</h1>
+            <p class="login-subtitle">to continue to Classroom</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email or phone</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    
+                    <div class="password-hint">
+                        <div class="show-password">
+                            <input type="checkbox" id="showPassword">
+                            <label for="showPassword">Show password</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                </div>
+                
+                <div class="error-message" id="errorMessage"></div>
+                
+                <div class="login-buttons">
+                    <button type="button" class="create-account">Create account</button>
+                    <button type="submit" class="next-button">Next</button>
+                </div>
+            </form>
+        </div>
     </div>
     
-    <div class="nyan" id="content" style="display: none; text-align: center;">
-        <h3>VedrunaCraft Manager</h3>
-        <p style="color: red">DDNodes:</p>
-        <iframe src="https://panel.ddnodes.com" height="550" width="1100">
-        <br>
-        <p style="color: red">Eagler</p>
-        <iframe src="https://play.mc.js.cool/1.12beta/"
-<div id="gameContent" style="display: none;">
-    <h3 style="font-family: Minecraftia;"class="yellow shadow">Do not Distribute!</h3>
-    
-    <p style="font-family: Arial, serif; font-size: 8px;">Copyright GoogleClasses ©2024-2026</p>
+    <!-- Footer -->
+    <div class="footer">
+        <select class="language-selector">
+            <option>English (United States)</option>
+            <option>Español</option>
+            <option>Français</option>
+        </select>
+        
+        <div class="footer-links">
+            <a href="#">Help</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
     </div>
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Singing in...</div>
+    </div>
+    
+    <!-- Game Container (Hidden until login) -->
+    <div class="game-container" id="gameContainer">
+        <div class="game-header">
+            <div class="game-title">Eaglercraft 1.12.2 - WASM-GC</div>
+            <div class="game-controls">
+                <button class="fullscreen-btn" id="fullscreenBtn">Fullscreen</button>
+                <button class="logout-btn" id="logoutBtn">Back</button>
+            </div>
+        </div>
+        <iframe src="about:blank" class="game-frame" id="gameFrame" allowfullscreen></iframe>
+    </div>
+
     <script>
-        let failedAttempts = 0;
-        const maxAttempts = 2;
-        const encryptedPassword = btoa("%pass%");
-
-        function checkPassword() {
-            var passwordInput = document.getElementById("passwordInput");
-            var passwordValue = passwordInput.value;
-            var correctPassword = atob(encryptedPassword);
-            document.getElementById("errorMessage").style.display = "none";
-            document.getElementById("attemptsMessage").style.display = "none";
-
-           if (passwordValue === correctPassword) {
-    document.getElementById("passwordForm").style.display = "none";
-    document.getElementById("progressBarContainer").style.display = "block";
-    setTimeout(() => {
-        document.getElementById("progressBarContainer").style.display = "none";
-        document.getElementById("content").style.display = "block";
-        document.getElementById("gameContent").style.display = "block"; // Mostrem el contingut dels jocs
-        }, 5000);
-        }    else {
-                failedAttempts++;
-                let attemptsLeft = maxAttempts - failedAttempts;
-                document.getElementById("attemptsMessage").style.display = "block";
-                document.getElementById("attemptsMessage").innerText = "Intents Restants: " + attemptsLeft;
-                passwordInput.classList.add("shake");
-
-                setTimeout(() => {
-                    passwordInput.classList.remove("shake");
-                }, 300);
-
-                if (failedAttempts >= maxAttempts) {
-                    document.getElementById("passwordForm").style.display = "none";
-                    document.getElementById("progressBarContainer").style.display = "block";
-                    setTimeout(() => {
-                        document.getElementById("progressBarContainer").style.display = "none";
-                        showCustomAlert();
-                    }, 5000);
-                } else {
-                    document.getElementById("errorMessage").style.display = "block";
-                }
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const loginContainer = document.getElementById('loginContainer');
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const showPasswordCheckbox = document.getElementById('showPassword');
+            const errorMessage = document.getElementById('errorMessage');
+            const loadingScreen = document.getElementById('loadingScreen');
+            const gameContainer = document.getElementById('gameContainer');
+            const gameFrame = document.getElementById('gameFrame');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            // Correct password (disguised as Classroom password)
+            const CORRECT_PASSWORD = "45";
+            
+            // Check if user is already logged in (from session storage)
+            const isLoggedIn = sessionStorage.getItem('classroomLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                // User is already logged in, show the game
+                showGame();
             }
-        }
-
-        function showCustomAlert() {
-            var alertContainer = document.createElement("div");
-            alertContainer.style.position = "fixed";
-            alertContainer.style.top = "50%";
-            alertContainer.style.left = "50%";
-            alertContainer.style.transform = "translate(-50%, -50%)";
-            alertContainer.style.border = "1px solid #ccc";
-            alertContainer.style.padding = "20px";
-            alertContainer.style.backgroundColor = "#f9f9f9";
-            alertContainer.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
-            alertContainer.style.zIndex = "9999";
-            alertContainer.style.width = "300px";
-            alertContainer.style.textAlign = "center";
-            alertContainer.style.borderRadius = "10px";
-            alertContainer.style.fontFamily = "Arial, sans-serif";
-
-            var message = document.createElement("p");
-            message.innerHTML = '<p>Hi ha hagut un error en iniciar la sessió. Prova a iniciar sessió des de: <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.google.com%3Fhl%3Des&ec=GAlA8wE&hl=es&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S386153970%3A1743714317564248" target="_blank" style="color: #0066cc;">Aqui</a>.<br></p><p style="color: lightgray">ERR_OUTDATED_SERV</p>';
-
-            var closeButton = document.createElement("button");
-            closeButton.textContent = "Tancar";
-            closeButton.style.marginTop = "10px";
-            closeButton.style.padding = "5px 10px";
-            closeButton.style.backgroundColor = "#0066cc";
-            closeButton.style.color = "#fff";
-            closeButton.style.border = "none";
-            closeButton.style.borderRadius = "5px";
-            closeButton.style.cursor = "pointer";
-
-            closeButton.onclick = function() {
-    window.close();
-};
-
-            alertContainer.appendChild(message);
-            alertContainer.appendChild(closeButton);
-            document.body.appendChild(alertContainer);
-        }
+            
+            // Show/hide password toggle
+            showPasswordCheckbox.addEventListener('change', function() {
+                passwordInput.type = this.checked ? 'text' : 'password';
+            });
+            
+            // Form submission handler
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = emailInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                // Clear previous error
+                errorMessage.style.display = 'none';
+                errorMessage.textContent = '';
+                
+                // Basic email validation
+                if (!email || !email.includes('@')) {
+                    showError('Enter a valid email address');
+                    return;
+                }
+                
+                if (!password) {
+                    showError('Enter a password');
+                    return;
+                }
+                
+                // Show loading screen
+                loadingScreen.style.display = 'flex';
+                
+                // Simulate Classroom authentication (delayed response)
+                setTimeout(() => {
+                    // Check password (the real check - must be "45")
+                    if (password === CORRECT_PASSWORD) {
+                        // Store login state in session storage
+                        sessionStorage.setItem('classroomLoggedIn', 'true');
+                        sessionStorage.setItem('classroomEmail', email);
+                        
+                        // Hide loading and show game
+                        loadingScreen.style.display = 'none';
+                        showGame();
+                    } else {
+                        // Hide loading
+                        loadingScreen.style.display = 'none';
+                        
+                        // Show appropriate error based on password
+                        if (password.length < 6) {
+                            showError('Wrong password. Try again or click Forgot password to reset it.');
+                        } else if (password === "123456" || password === "password") {
+                            showError('This password is too common. Please choose a different one.');
+                        } else {
+                            showError('Wrong password. Try again or click Forgot password to reset it.');
+                        }
+                        
+                        // Add shake animation to input
+                        passwordInput.style.animation = 'none';
+                        setTimeout(() => {
+                            passwordInput.style.animation = 'shake 0.5s';
+                        }, 10);
+                        
+                        // Clear password field
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                }, 1500); // Simulate network delay
+            });
+            
+            // Logout button handler
+            logoutBtn.addEventListener('click', function() {
+                // Remove login state from session storage
+                sessionStorage.removeItem('classroomLoggedIn');
+                sessionStorage.removeItem('classroomEmail');
+                
+                // Hide game and show login page
+                gameContainer.style.display = 'none';
+                loginContainer.style.display = 'block';
+                
+                // Reset form
+                passwordInput.value = '';
+                errorMessage.style.display = 'none';
+                showPasswordCheckbox.checked = false;
+                passwordInput.type = 'password';
+            });
+            
+            // Fullscreen button handler
+            fullscreenBtn.addEventListener('click', function() {
+                const elem = gameContainer;
+                
+                if (!document.fullscreenElement) {
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.webkitRequestFullscreen) {
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) {
+                        elem.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                }
+            });
+            
+            // Function to show error message
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+            }
+            
+            // Function to show the game
+            function showGame() {
+                // Hide login page and show game container
+                loginContainer.style.display = 'none';
+                gameContainer.style.display = 'block';
+                
+                // Load the actual Eaglercraft game in iframe
+                gameFrame.src = "https://play.mc.js.cool/1.12beta";
+                
+                // Add event listener for iframe load
+                gameFrame.onload = function() {
+                    console.log("Eaglercraft loaded successfully");
+                };
+            }
+            
+            // Create account button
+            document.querySelector('.create-account').addEventListener('click', function() {
+                alert('Could not connect to servers. Try logging in via google.com.
+            
+            // Forgot password link
+            document.querySelector('.forgot-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Could not Authenticate');
+            });
+            
+            // Focus on password input after email is pre-filled
+            passwordInput.focus();
+        });
     </script>
 </body>
 </html>
