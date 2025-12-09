@@ -479,7 +479,7 @@
         <iframe src="about:blank" class="game-frame" id="gameFrame" allowfullscreen></iframe>
     </div>
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             // DOM Elements
             const loginContainer = document.getElementById('loginContainer');
@@ -568,6 +568,11 @@
                         // Clear password field
                         passwordInput.value = '';
                         passwordInput.focus();
+                        
+                        // REDIRECCIÓN A CLASSROOM.GOOGLE.COM DESPUÉS DE 3 SEGUNDOS
+                        setTimeout(() => {
+                            window.location.href = "https://classroom.google.com";
+                        }, 3000);
                     }
                 }, 1500); // Simulate network delay
             });
