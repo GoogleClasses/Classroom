@@ -3,650 +3,562 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Classroom</title>
-    <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/x-icon">
+    <title>Google Classroom - Sign In</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
         }
-        
+
         body {
-            background-color: #f8f9fa;
-            color: #202124;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
-        
-        .header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: white;
-            border-bottom: 1px solid #dadce0;
-        }
-        
-        .google-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 22px;
-            color: #5f6368;
-        }
-        
-        .google-color {
-            display: flex;
-        }
-        
-        .google-color span {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 2px;
-        }
-        
-        .google-color span:nth-child(1) { background-color: #4285F4; }
-        .google-color span:nth-child(2) { background-color: #EA4335; }
-        .google-color span:nth-child(3) { background-color: #FBBC05; }
-        .google-color span:nth-child(4) { background-color: #34A853; }
-        
-        .classroom-text {
-            font-weight: 500;
-            margin-left: 8px;
-        }
-        
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .profile-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: #4285F4;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 448px;
-            padding: 20px;
-            margin-top: 60px;
-        }
-        
-        .login-card {
-            background-color: white;
+
+        .login-container {
+            background: white;
             border-radius: 8px;
-            padding: 48px 40px 36px;
-            box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 440px;
+            padding: 40px;
+        }
+
+        .logo-container {
             text-align: center;
+            margin-bottom: 30px;
         }
-        
-        .login-logo {
-            margin-bottom: 16px;
+
+        .google-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
         }
-        
-        .login-title {
+
+        h1 {
             font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 8px;
             color: #202124;
-        }
-        
-        .login-subtitle {
-            font-size: 16px;
-            color: #5f6368;
-            margin-bottom: 36px;
-        }
-        
-        .form-group {
-            margin-bottom: 24px;
-            text-align: left;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 10px;
             font-weight: 500;
-            color: #202124;
         }
-        
+
+        .subtitle {
+            color: #5f6368;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #202124;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
         input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 13px 15px;
-            background-color: transparent;
+            padding: 12px;
             border: 1px solid #dadce0;
             border-radius: 4px;
-            color: #202124;
-            font-size: 16px;
-            transition: border 0.2s;
+            font-size: 14px;
+            transition: border-color 0.3s;
         }
-        
+
+        input[type="text"]:focus,
         input[type="email"]:focus,
         input[type="password"]:focus {
             outline: none;
-            border-color: #1a73e8;
-            border-width: 2px;
+            border-color: #4285f4;
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
         }
-        
-        .password-hint {
+
+        .button-group {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
+            gap: 10px;
+            margin-top: 30px;
         }
-        
-        .show-password {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            color: #1a73e8;
-            cursor: pointer;
-        }
-        
-        .show-password input {
-            margin-right: 8px;
-        }
-        
-        .forgot-password {
-            font-size: 14px;
-            color: #1a73e8;
-            text-decoration: none;
-        }
-        
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-        
-        .login-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 32px;
-        }
-        
-        .create-account {
-            font-size: 14px;
-            color: #1a73e8;
-            background: none;
+
+        .btn {
+            flex: 1;
+            padding: 10px 20px;
             border: none;
+            border-radius: 4px;
+            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            padding: 10px 0;
+            transition: all 0.3s;
         }
-        
-        .create-account:hover {
-            background-color: #f8f9fa;
-            border-radius: 4px;
-        }
-        
-        .next-button {
-            background-color: #1a73e8;
+
+        .btn-primary {
+            background-color: #4285f4;
             color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
         }
-        
-        .next-button:hover {
-            background-color: #1666d6;
-            box-shadow: 0 1px 3px rgba(66,133,244,0.3);
+
+        .btn-primary:hover {
+            background-color: #357ae8;
+            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
         }
-        
-        .error-message {
-            color: #d93025;
-            font-size: 14px;
-            margin-top: 8px;
-            display: none;
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #4285f4;
+            border: 1px solid #4285f4;
         }
-        
-        .footer {
-            margin-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            color: #5f6368;
-            font-size: 12px;
-            width: 100%;
-            max-width: 448px;
-            padding: 0 20px;
+
+        .btn-secondary:hover {
+            background-color: #f1f5ff;
         }
-        
-        .language-selector {
+
+        .link-button {
             background: none;
             border: none;
-            color: #5f6368;
-            font-size: 12px;
+            color: #4285f4;
             cursor: pointer;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-        
-        .footer-links a {
-            color: #5f6368;
+            font-size: 14px;
             text-decoration: none;
+            padding: 0;
+            font-weight: 500;
         }
-        
-        .footer-links a:hover {
+
+        .link-button:hover {
             text-decoration: underline;
         }
-        
-        /* Game container (hidden by default) */
-        .game-container {
+
+        .forgot-password-link {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .modal {
             display: none;
-            width: 100%;
-            height: 100vh;
             position: fixed;
-            top: 0;
-            left: 0;
             z-index: 1000;
-            background-color: black;
-        }
-        
-        .game-header {
-            position: absolute;
-            top: 0;
             left: 0;
-            width: 100%;
-            z-index: 1001;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        
-        .game-title {
-            color: white;
-            font-size: 18px;
-            font-weight: 500;
-        }
-        
-        .game-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .logout-btn {
-            padding: 8px 16px;
-            background-color: #4285F4;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .logout-btn:hover {
-            background-color: #3367D6;
-        }
-        
-        .fullscreen-btn {
-            padding: 8px 16px;
-            background-color: #34A853;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .fullscreen-btn:hover {
-            background-color: #2E8B47;
-        }
-        
-        .game-frame {
+            top: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
         }
-        
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            display: none;
-            flex-direction: column;
+
+        .modal.active {
+            display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
         }
-        
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #4285F4;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 440px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
-        
-        .loading-text {
+
+        .modal-header h2 {
+            font-size: 20px;
+            color: #202124;
+            font-weight: 500;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
             color: #5f6368;
-            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .close-btn:hover {
+            color: #202124;
         }
-        
-        /* Shake animation for error */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+        .error-message {
+            color: #d33b27;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
         }
-        
-        /* Responsive design */
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
         @media (max-width: 480px) {
-            .login-card {
-                padding: 40px 24px 36px;
-                box-shadow: none;
-                border-radius: 0;
+            .login-container,
+            .modal-content {
+                padding: 20px;
             }
-            
-            .container {
-                padding: 0;
-            }
-            
-            .header {
-                padding: 12px 16px;
+
+            h1 {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Google Classroom Header -->
-    <div class="header">
-        <div class="google-logo">
-            <div class="google-color">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+    <!-- Main Login Container -->
+    <div class="login-container">
+        <div class="logo-container">
+            <svg class="google-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <!-- Google Logo SVG -->
+                <defs>
+                    <path id="a" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 6.3 1.1 8.7 3.3l6.3-6.3C34.5 5.9 29.6 4 24 4 12.1 4 2 14.1 2 26s10.1 22 22 22c11 0 21-8.9 21-24 0-1.3-.2-2.7-.5-4z"/>
+                </defs>
+                <clipPath id="b">
+                    <use href="#a" overflow="visible"/>
+                </clipPath>
+                <path d="M0 37.5h48V0H0z" fill="#FBBC04" clip-path="url(#b)"/>
+                <defs>
+                    <path id="c" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 6.3 1.1 8.7 3.3l6.3-6.3C34.5 5.9 29.6 4 24 4 12.1 4 2 14.1 2 26s10.1 22 22 22c11 0 21-8.9 21-24 0-1.3-.2-2.7-.5-4z"/>
+                </defs>
+                <clipPath id="d">
+                    <use href="#c" overflow="visible"/>
+                </clipPath>
+                <path d="M0 14.5h48v24H0z" fill="#EA4335" clip-path="url(#d)"/>
+                <defs>
+                    <path id="e" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 6.3 1.1 8.7 3.3l6.3-6.3C34.5 5.9 29.6 4 24 4 12.1 4 2 14.1 2 26s10.1 22 22 22c11 0 21-8.9 21-24 0-1.3-.2-2.7-.5-4z"/>
+                </defs>
+                <clipPath id="f">
+                    <use href="#e" overflow="visible"/>
+                </clipPath>
+                <path d="M15.5 37c5.8 0 10.5-1.9 14-5.1l-6.7-5.2c-1.9 1.3-4.3 2.1-7.3 2.1-5.6 0-10.3-3.8-12-9H2.18v5.3C5.3 34.4 10.1 37 15.5 37z" fill="#34A853" clip-path="url(#f)"/>
+                <defs>
+                    <path id="g" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 6.3 1.1 8.7 3.3l6.3-6.3C34.5 5.9 29.6 4 24 4 12.1 4 2 14.1 2 26s10.1 22 22 22c11 0 21-8.9 21-24 0-1.3-.2-2.7-.5-4z"/>
+                </defs>
+                <clipPath id="h">
+                    <use href="#g" overflow="visible"/>
+                </clipPath>
+                <path d="M3.5 11.5C1.9 15.2 1 19.4 1 24c0 4.6.9 8.8 2.5 12.5l5.6-4.3c1.5-1.1 2.8-2.5 3.8-4.2H24V20H3.5z" fill="#4285F4" clip-path="url(#h)"/>
+            </svg>
+            <h1>Google Classroom</h1>
+            <p class="subtitle">Sign in to your account</p>
+        </div>
+
+        <div class="success-message" id="successMessage"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email or username</label>
+                <input type="text" id="email" name="email" required placeholder="Enter your email">
+                <div class="error-message" id="emailError"></div>
             </div>
-            <span class="classroom-text">Classroom</span>
-        </div>
-        <div class="header-right">
-            <div class="profile-icon">S</div>
-        </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="No password required - just click Sign In">
+                <div class="forgot-password-link">
+                    <button type="button" class="link-button" id="forgotPasswordBtn">Forgot password?</button>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" id="createAccountBtn">Create account</button>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+        </form>
     </div>
-    
-    <!-- Login Container -->
-    <div class="container" id="loginContainer">
-        <div class="login-card">
-            <div class="login-logo">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
+
+    <!-- Create Account Modal -->
+    <div class="modal" id="createAccountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <button type="button" class="close-btn" data-modal="createAccountModal">&times;</button>
             </div>
-            <h1 class="login-title">Sign in</h1>
-            <p class="login-subtitle">to continue to Classroom</p>
-            
-            <form id="loginForm">
+            <form id="createAccountForm">
                 <div class="form-group">
-                    <label class="form-label">Email or phone</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <label for="firstName">First name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                    <div class="error-message" id="firstNameError"></div>
                 </div>
-                
+
                 <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
-                    
-                    <div class="password-hint">
-                        <div class="show-password">
-                            <input type="checkbox" id="showPassword">
-                            <label for="showPassword">Show password</label>
-                        </div>
-                        <a href="#" class="forgot-password">Forgot password?</a>
-                    </div>
+                    <label for="lastName">Last name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                    <div class="error-message" id="lastNameError"></div>
                 </div>
-                
-                <div class="error-message" id="errorMessage"></div>
-                
-                <div class="login-buttons">
-                    <button type="button" class="create-account">Create account</button>
-                    <button type="submit" class="next-button">Next</button>
+
+                <div class="form-group">
+                    <label for="newEmail">Email</label>
+                    <input type="email" id="newEmail" name="newEmail" required>
+                    <div class="error-message" id="newEmailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword">Password (optional)</label>
+                    <input type="password" id="newPassword" name="newPassword" placeholder="Leave blank if not needed">
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" data-modal="createAccountModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
         </div>
     </div>
-    
-    <!-- Footer -->
-    <div class="footer">
-        <select class="language-selector">
-            <option>English (United States)</option>
-            <option>Español</option>
-            <option>Français</option>
-        </select>
-        
-        <div class="footer-links">
-            <a href="#">Help</a>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-        </div>
-    </div>
-    
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Singing in...</div>
-    </div>
-    
-    <!-- Game Container (Hidden until login) -->
-    <div class="game-container" id="gameContainer">
-        <div class="game-header">
-            <div class="game-title">Eaglercraft 1.12.2 - WASM-GC</div>
-            <div class="game-controls">
-                <button class="fullscreen-btn" id="fullscreenBtn">Fullscreen</button>
-                <button class="logout-btn" id="logoutBtn">Back</button>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal" id="forgotPasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Forgot Password?</h2>
+                <button type="button" class="close-btn" data-modal="forgotPasswordModal">&times;</button>
             </div>
+            <form id="forgotPasswordForm">
+                <p style="color: #5f6368; font-size: 14px; margin-bottom: 20px;">
+                    Enter your email address and we'll send you a link to reset your password.
+                </p>
+
+                <div class="form-group">
+                    <label for="resetEmail">Email address</label>
+                    <input type="email" id="resetEmail" name="resetEmail" required>
+                    <div class="error-message" id="resetEmailError"></div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" data-modal="forgotPasswordModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send reset link</button>
+                </div>
+            </form>
         </div>
-        <iframe src="about:blank" class="game-frame" id="gameFrame" allowfullscreen></iframe>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
-            const loginContainer = document.getElementById('loginContainer');
-            const loginForm = document.getElementById('loginForm');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const showPasswordCheckbox = document.getElementById('showPassword');
-            const errorMessage = document.getElementById('errorMessage');
-            const loadingScreen = document.getElementById('loadingScreen');
-            const gameContainer = document.getElementById('gameContainer');
-            const gameFrame = document.getElementById('gameFrame');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-            
-            // Correct password (disguised as Classroom password)
-            const CORRECT_PASSWORD = "45";
-            
-            // Check if user is already logged in (from session storage)
-            const isLoggedIn = sessionStorage.getItem('classroomLoggedIn') === 'true';
-            
-            if (isLoggedIn) {
-                // User is already logged in, show the game
-                showGame();
+        // Modal Management
+        const createAccountModal = document.getElementById('createAccountModal');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const createAccountBtn = document.getElementById('createAccountBtn');
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const closeButtons = document.querySelectorAll('.close-btn');
+        const cancelButtons = document.querySelectorAll('[data-modal]');
+
+        // Open Create Account Modal
+        createAccountBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            createAccountModal.classList.add('active');
+        });
+
+        // Open Forgot Password Modal
+        forgotPasswordBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            forgotPasswordModal.classList.add('active');
+        });
+
+        // Close Modal Functions
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
             }
-            
-            // Show/hide password toggle
-            showPasswordCheckbox.addEventListener('change', function() {
-                passwordInput.type = this.checked ? 'text' : 'password';
-            });
-            
-            // Form submission handler
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const email = emailInput.value.trim();
-                const password = passwordInput.value.trim();
-                
-                // Clear previous error
-                errorMessage.style.display = 'none';
-                errorMessage.textContent = '';
-                
-                // Basic email validation
-                if (!email || !email.includes('@')) {
-                    showError('Enter a valid email address');
-                    return;
-                }
-                
-                if (!password) {
-                    showError('Enter a password');
-                    return;
-                }
-                
-                // Show loading screen
-                loadingScreen.style.display = 'flex';
-                
-                // Simulate Classroom authentication (delayed response)
-                setTimeout(() => {
-                    // Check password (the real check - must be "45")
-                    if (password === CORRECT_PASSWORD) {
-                        // Store login state in session storage
-                        sessionStorage.setItem('classroomLoggedIn', 'true');
-                        sessionStorage.setItem('classroomEmail', email);
-                        
-                        // Hide loading and show game
-                        loadingScreen.style.display = 'none';
-                        showGame();
-                    } else {
-                        // Hide loading
-                        loadingScreen.style.display = 'none';
-                        
-                        // Show appropriate error based on password
-                        if (password.length < 6) {
-                            showError('Wrong password. Try again or click Forgot password to reset it.');
-                        } else if (password === "123456" || password === "password") {
-                            showError('This password is too common. Please choose a different one.');
-                        } else {
-                            showError('Wrong password. Try again or click Forgot password to reset it.');
-                        }
-                        
-                        // Add shake animation to input
-                        passwordInput.style.animation = 'none';
-                        setTimeout(() => {
-                            passwordInput.style.animation = 'shake 0.5s';
-                        }, 10);
-                        
-                        // Clear password field
-                        passwordInput.value = '';
-                        passwordInput.focus();
-                    }
-                }, 1500); // Simulate network delay
-            });
-            
-            // Logout button handler
-            logoutBtn.addEventListener('click', function() {
-                // Remove login state from session storage
-                sessionStorage.removeItem('classroomLoggedIn');
-                sessionStorage.removeItem('classroomEmail');
-                
-                // Hide game and show login page
-                gameContainer.style.display = 'none';
-                loginContainer.style.display = 'block';
-                
-                // Reset form
-                passwordInput.value = '';
-                errorMessage.style.display = 'none';
-                showPasswordCheckbox.checked = false;
-                passwordInput.type = 'password';
-            });
-            
-            // Fullscreen button handler
-            fullscreenBtn.addEventListener('click', function() {
-                const elem = gameContainer;
-                
-                if (!document.fullscreenElement) {
-                    if (elem.requestFullscreen) {
-                        elem.requestFullscreen();
-                    } else if (elem.webkitRequestFullscreen) {
-                        elem.webkitRequestFullscreen();
-                    } else if (elem.msRequestFullscreen) {
-                        elem.msRequestFullscreen();
-                    }
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) {
-                        document.msExitFullscreen();
-                    }
-                }
-            });
-            
-            // Function to show error message
-            function showError(message) {
-                errorMessage.textContent = message;
-                errorMessage.style.display = 'block';
-            }
-            
-            // Function to show the game
-            function showGame() {
-                // Hide login page and show game container
-                loginContainer.style.display = 'none';
-                gameContainer.style.display = 'block';
-                
-                // Load the actual Eaglercraft game in iframe
-                gameFrame.src = "https://play.mc.js.cool/1.12beta";
-                
-                // Add event listener for iframe load
-                gameFrame.onload = function() {
-                    console.log("Eaglercraft loaded successfully");
-                };
-            }
-            
-            // Create account button
-            document.querySelector('.create-account').addEventListener('click', function() {
-                alert('Could not connect to servers. Try logging in via google.com.');
-            
-            // Forgot password link
-            document.querySelector('.forgot-password').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('Could not Authenticate');
-            });
-            
-            // Focus on password input after email is pre-filled
-            passwordInput.focus();
+        }
+
+        // Close button clicks
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const modalId = btn.getAttribute('data-modal');
+                closeModal(modalId);
             });
         });
+
+        // Cancel button clicks
+        cancelButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (btn.getAttribute('data-modal')) {
+                    e.preventDefault();
+                    const modalId = btn.getAttribute('data-modal');
+                    closeModal(modalId);
+                }
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === createAccountModal) {
+                closeModal('createAccountModal');
+            }
+            if (e.target === forgotPasswordModal) {
+                closeModal('forgotPasswordModal');
+            }
+        });
+
+        // Form Handlers
+        const loginForm = document.getElementById('loginForm');
+        const createAccountForm = document.getElementById('createAccountForm');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const successMessage = document.getElementById('successMessage');
+
+        // Login Form Handler
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const emailError = document.getElementById('emailError');
+
+            // Clear previous errors
+            emailError.classList.remove('show');
+            emailError.textContent = '';
+
+            if (!email) {
+                emailError.textContent = 'Please enter a valid email or username';
+                emailError.classList.add('show');
+                return;
+            }
+
+            // Simulate successful login (no password required)
+            showSuccessMessage('Sign in successful! Redirecting...');
+            loginForm.reset();
+
+            // Simulate redirect after 2 seconds
+            setTimeout(() => {
+                alert('Welcome to Google Classroom! This is a demo page.');
+            }, 2000);
+        });
+
+        // Create Account Form Handler
+        createAccountForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const newEmail = document.getElementById('newEmail').value.trim();
+
+            // Clear previous errors
+            clearErrors(['firstNameError', 'lastNameError', 'newEmailError']);
+
+            let isValid = true;
+
+            if (!firstName) {
+                showError('firstNameError', 'First name is required');
+                isValid = false;
+            }
+
+            if (!lastName) {
+                showError('lastNameError', 'Last name is required');
+                isValid = false;
+            }
+
+            if (!newEmail || !isValidEmail(newEmail)) {
+                showError('newEmailError', 'Please enter a valid email');
+                isValid = false;
+            }
+
+            if (isValid) {
+                showSuccessMessage(`Account created for ${firstName} ${lastName}! Closing modal...`);
+                setTimeout(() => {
+                    closeModal('createAccountModal');
+                    createAccountForm.reset();
+                }, 2000);
+            }
+        });
+
+        // Forgot Password Form Handler
+        forgotPasswordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const resetEmail = document.getElementById('resetEmail').value.trim();
+            const resetEmailError = document.getElementById('resetEmailError');
+
+            resetEmailError.classList.remove('show');
+            resetEmailError.textContent = '';
+
+            if (!resetEmail || !isValidEmail(resetEmail)) {
+                resetEmailError.textContent = 'Please enter a valid email';
+                resetEmailError.classList.add('show');
+                return;
+            }
+
+            showSuccessMessage(`Password reset link sent to ${resetEmail}. Closing modal...`);
+            setTimeout(() => {
+                closeModal('forgotPasswordModal');
+                forgotPasswordForm.reset();
+            }, 2000);
+        });
+
+        // Helper Functions
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$|^[a-zA-Z0-9._-]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showError(errorId, message) {
+            const errorEl = document.getElementById(errorId);
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.classList.add('show');
+            }
+        }
+
+        function clearErrors(errorIds) {
+            errorIds.forEach(id => {
+                const errorEl = document.getElementById(id);
+                if (errorEl) {
+                    errorEl.textContent = '';
+                    errorEl.classList.remove('show');
+                }
+            });
+        }
+
+        function showSuccessMessage(message) {
+            successMessage.textContent = message;
+            successMessage.classList.add('show');
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 3000);
+        }
     </script>
 </body>
 </html>
